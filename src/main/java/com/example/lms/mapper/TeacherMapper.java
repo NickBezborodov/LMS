@@ -1,10 +1,11 @@
 package com.example.lms.mapper;
 
+import com.example.lms.dto.TeacherDto;
+import com.example.lms.model.Teacher;
 import org.mapstruct.Mapper;
 
-@Mapper(componentModel = "")
-public class TeacherMapper {
+@Mapper(componentModel = "spring")
+public interface TeacherMapper {
+    TeacherDto toDto(Teacher teacher);
+    Teacher toEntity(TeacherDto dto);
 }
-/* mapper
-Класс	Аннотации
-Интерфейс маппера	@Mapper(componentModel = "spring") */
