@@ -1,6 +1,5 @@
 package com.example.lms.service.impl;
 
-
 import com.example.lms.dto.StudentDto;
 import com.example.lms.model.Student;
 import com.example.lms.exception.StudentNotFoundException;
@@ -10,9 +9,7 @@ import com.example.lms.service.StudentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -46,7 +43,7 @@ public class StudentServiceImpl implements StudentService {
     @Transactional
     public StudentDto updateStudent(Long id, StudentDto dto) {
         Student student = studentRepository.findById(id)
-                .orElseThrow();
+                .orElseThrow(() -> new StudentNotFoundException("Студент с id " + id + " не найден"));
         student.setFirstName(dto.getFirstName());
         student.setLastName(dto.getLastName());
 
@@ -58,7 +55,8 @@ public class StudentServiceImpl implements StudentService {
     @Override
     @Transactional
     public void deleteStudent(Long id) {
-        Student student = studentRepository.findById(id).orElseThrow(() -> new StudentNotFoundException("Студент с id " + id + " не найден"));
+        Student student = studentRepository.findById(id)
+                .orElseThrow(() -> new StudentNotFoundException("Студент с id " + id + " не найден"));
         studentRepository.delete(student);
     }
 }
