@@ -2,8 +2,10 @@ package com.example.lms.service.impl;
 
 import com.example.lms.dao.TeacherRepository;
 import com.example.lms.dto.TeacherDto;
+import com.example.lms.exception.StudentNotFoundException;
 import com.example.lms.exception.TeacherNotFoundException;
 import com.example.lms.mapper.TeacherMapper;
+import com.example.lms.model.Course;
 import com.example.lms.model.Teacher;
 import com.example.lms.service.TeacherService;
 import lombok.RequiredArgsConstructor;
@@ -43,13 +45,12 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     @Transactional
     public TeacherDto updateTeacher(Long id, TeacherDto dto) {
-        Teacher teacher = teacherRepository.findById(id)
+        teacherRepository.findById(id)
                 .orElseThrow(() -> new TeacherNotFoundException("Учитель с id " + id + " не найден"));
-                teacher.setFirstName(dto.getFirstName());
-                teacher.setLastName(dto.getLastName());
-
-                teacher = teacherRepository.save(teacher);
-                return teacherMapper.toDto(teacher);
+        Teacher teacher = teacherMapper.toEntity(dto);
+        teacher.setId(id);
+        teacher = teacherRepository.save(teacher);
+        return teacherMapper.toDto(teacher);
     }
 
     @Override

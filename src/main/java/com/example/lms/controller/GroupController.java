@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
-@RequestMapping("api/v1/lms")
+@RequestMapping("api/v1/groups")
 @RestController
 @RequiredArgsConstructor
 public class GroupController {

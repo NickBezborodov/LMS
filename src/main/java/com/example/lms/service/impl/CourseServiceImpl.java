@@ -3,6 +3,7 @@ package com.example.lms.service.impl;
 import com.example.lms.dao.CourseRepository;
 import com.example.lms.dto.CourseDto;
 import com.example.lms.exception.CourseNotFoundException;
+import com.example.lms.exception.StudentNotFoundException;
 import com.example.lms.mapper.CourseMapper;
 import com.example.lms.model.Course;
 import com.example.lms.service.CourseService;
@@ -43,11 +44,10 @@ public class CourseServiceImpl implements CourseService {
     @Override
     @Transactional
     public CourseDto updateCourse(Long id, CourseDto dto) {
-        Course course = courseRepository.findById(id)
-                .orElseThrow(() -> new CourseNotFoundException("Курс с id " + id + " не найден"));
-        course.setDescription(dto.getDescription());
-        course.setName(dto.getName());
-
+        courseRepository.findById(id)
+                .orElseThrow(() -> new StudentNotFoundException("Курс с id " + id + " не найден"));
+        Course course = courseMapper.toEntity(dto);
+        course.setId(id);
         course = courseRepository.save(course);
         return courseMapper.toDto(course);
     }
