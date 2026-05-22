@@ -12,6 +12,7 @@ import com.example.lms.exception.TeacherNotFoundException;
 import com.example.lms.mapper.ScheduleMapper;
 import com.example.lms.model.Schedule;
 import com.example.lms.service.ScheduleService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -43,7 +44,8 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     @Override
-    public ScheduleDto addSchedule(ScheduleDto dto) {
+    @Transactional
+    public ScheduleDto addSchedule(@Valid ScheduleDto dto) {
         Schedule schedule = scheduleMapper.toEntity(dto);
         schedule = scheduleRepository.save(schedule);
         return scheduleMapper.toDto(schedule);

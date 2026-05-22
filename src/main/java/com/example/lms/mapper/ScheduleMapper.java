@@ -5,13 +5,14 @@ import com.example.lms.model.Course;
 import com.example.lms.model.Group;
 import com.example.lms.model.Schedule;
 import com.example.lms.model.Teacher;
+import jakarta.validation.Valid;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
 public interface ScheduleMapper {
     ScheduleDto toDto(Schedule schedule);
 
-    Schedule toEntity(ScheduleDto dto);
+    Schedule toEntity(@Valid ScheduleDto dto);
 
     default Group mapGroup(Long groupId) {
         if(groupId == null) return null;
