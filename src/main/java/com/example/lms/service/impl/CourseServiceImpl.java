@@ -44,10 +44,11 @@ public class CourseServiceImpl implements CourseService {
     @Override
     @Transactional
     public CourseDto updateCourse(Long id, CourseDto dto) {
-        courseRepository.findById(id)
+        Course course = courseRepository.findById(id)
                 .orElseThrow(() -> new StudentNotFoundException("Курс с id " + id + " не найден"));
-        Course course = courseMapper.toEntity(dto);
-        course.setId(id);
+        course.setName(dto.getName());
+        course.setDescription(dto.getDescription());
+
         course = courseRepository.save(course);
         return courseMapper.toDto(course);
     }

@@ -42,10 +42,11 @@ public class StudentServiceImpl implements StudentService {
     @Override
     @Transactional
     public StudentDto updateStudent(Long id, StudentDto dto) {
-        studentRepository.findById(id)
+        Student student = studentRepository.findById(id)
                 .orElseThrow(() -> new StudentNotFoundException("Студент с id " + id + " не найден"));
-        Student student = studentMapper.toEntity(dto);
-        student.setId(id);
+        student.setFirstName(dto.getFirstName());
+        student.setLastName(dto.getLastName());
+
         student = studentRepository.save(student);
         return studentMapper.toDto(student);
     }

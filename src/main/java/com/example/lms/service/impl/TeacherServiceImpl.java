@@ -45,10 +45,11 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     @Transactional
     public TeacherDto updateTeacher(Long id, TeacherDto dto) {
-        teacherRepository.findById(id)
+        Teacher teacher = teacherRepository.findById(id)
                 .orElseThrow(() -> new TeacherNotFoundException("Учитель с id " + id + " не найден"));
-        Teacher teacher = teacherMapper.toEntity(dto);
-        teacher.setId(id);
+        teacher.setFirstName(dto.getFirstName());
+        teacher.setLastName(dto.getLastName());
+
         teacher = teacherRepository.save(teacher);
         return teacherMapper.toDto(teacher);
     }

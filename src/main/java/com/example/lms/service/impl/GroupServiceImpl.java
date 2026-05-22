@@ -40,16 +40,16 @@ public class GroupServiceImpl implements GroupService {
     public GroupDto getGroupById(Long id) {
         Group group = groupRepository.findById(id)
                 .orElseThrow(() -> new GroupNotFoundException("Группа с id " + id + "не найдена"));
-                return groupMapper.toDto(group);
+        return groupMapper.toDto(group);
     }
 
     @Override
     @Transactional
     public GroupDto updateGroup(Long id, GroupDto dto) {
-        groupRepository.findById(id)
+        Group group = groupRepository.findById(id)
                 .orElseThrow(() -> new GroupNotFoundException("Группа с id " + id + "не найдена"));
-        Group group = groupMapper.toEntity(dto);
-        group.setId(id);
+        group.setName(dto.getName());
+
         group = groupRepository.save(group);
         return groupMapper.toDto(group);
     }
