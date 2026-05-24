@@ -14,5 +14,5 @@ import lombok.NoArgsConstructor;
 public class GroupDto {
     @NotBlank(message = "Название группы не должно быть пустым")
     @Size(min = 1, message = "Не должно быть меньше 1 символа")
-    private final String name;
+    private  String name;
 }

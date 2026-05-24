@@ -14,9 +14,9 @@ import lombok.NoArgsConstructor;
 public class CourseDto {
     @NotBlank(message = "Название курса не должно быть пустым")
     @Size(min = 1, message = "Не должно быть меньше 1 символа")
-    private final String name;
+    private  String name;
     @NotBlank(message = "Описание не должно быть пустым")
     @Size(min = 1, message = "Не должно быть меньше 1 символа")
-    private final String description;
-    private final Long teacherId;
+    private  String description;
+    private  Long teacherId;
 }

@@ -14,10 +14,10 @@ import lombok.NoArgsConstructor;
 public class StudentDto {
     @NotBlank(message = "Имя не должно быть пустым")
     @Size(min = 1, message = "Не должно быть меньше 1 символа")
-    private final String firstName;
+    private String firstName;
     @NotBlank(message = "Фамилия не должна быть пустой")
     @Size(min = 1, message = "Не должно быть меньше 1 символа")
-    private final String lastName;
-    private final Long groupId;
+    private  String lastName;
+    private Long groupId;
 
 }

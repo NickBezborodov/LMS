@@ -14,11 +14,11 @@ import java.time.LocalDateTime;
 @Builder
 public class ScheduleDto {
     @NotNull
-    private final Long groupId;
+    private  Long groupId;
     @NotNull
-    private final Long teacherId;
+    private  Long teacherId;
     @NotNull
-    private final Long courseId;
+    private  Long courseId;
     @NotNull
-    private final LocalDateTime lessonDate;
+    private  LocalDateTime lessonDate;
 }
