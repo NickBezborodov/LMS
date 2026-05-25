@@ -18,4 +18,5 @@ public class TeacherDto {
     @NotBlank(message = "Фамилия не должна быть пустой")
     @Size(min = 1, message = "Не должно быть меньше 1 символа")
     private  String lastName;
+    private Long id;
 }

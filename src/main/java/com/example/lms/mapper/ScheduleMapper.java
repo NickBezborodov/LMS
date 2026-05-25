@@ -7,11 +7,18 @@ import com.example.lms.model.Schedule;
 import com.example.lms.model.Teacher;
 import jakarta.validation.Valid;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface ScheduleMapper {
+    @Mapping(target = "groupId", source = "group.id")
+    @Mapping(target = "teacherId", source = "teacher.id")
+    @Mapping(target = "courseId", source = "course.id")
     ScheduleDto toDto(Schedule schedule);
 
+    @Mapping(target = "group", source = "groupId")
+    @Mapping(target = "teacher", source = "teacherId")
+    @Mapping(target = "course", source = "courseId")
     Schedule toEntity(@Valid ScheduleDto dto);
 
     default Group mapGroup(Long groupId) {

@@ -19,5 +19,5 @@ public class StudentDto {
     @Size(min = 1, message = "Не должно быть меньше 1 символа")
     private  String lastName;
     private Long groupId;
-
+    private Long id;
 }
