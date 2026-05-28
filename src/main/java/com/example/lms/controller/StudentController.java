@@ -32,6 +32,16 @@ public class StudentController {
         return studentService.addStudent(dto);
     }
 
+    @PostMapping("/{studentId}/check-group/{groupId}")
+    public boolean checkStudentGroup(@PathVariable Long studentId, @PathVariable Long groupId) {
+        return studentService.existsByStudentIdAndGroupId(studentId, groupId);
+    }
+
+    @PostMapping("/assign-course")
+    public void assignCourse(@RequestParam Long groupId, @RequestParam Long courseId) {
+        studentService.assignGroupToCourse(groupId, courseId);
+    }
+
     @PutMapping("/{id}")
     public StudentDto updateStudent(@PathVariable Long id, @Valid @RequestBody StudentDto dto) {
         return studentService.updateStudent(id, dto);

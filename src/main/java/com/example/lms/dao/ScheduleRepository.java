@@ -18,4 +18,7 @@ public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
     @Query("SELECT COUNT(s) > 0 FROM Schedule s WHERE s.teacher.id = :teacherId AND s.lessonDate = :lessonDate")
     boolean existsScheduleByTeacherAndLessonDate(@Param("teacherId") Long teacherId, @Param("lessonDate")LocalDateTime lessonDate);
 
+    //Студент не может записаться на курс, если его группа не назначена на этот курс
+    @Query("SELECT COUNT(s) > 0 FROM Schedule s WHERE s.group.id = :groupId AND s.course.id = :courseId")
+    boolean existsByGroupIdAndCourseId(@Param("groupId") Long groupId, @Param("courseId") Long courseId);
 }
