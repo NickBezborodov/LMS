@@ -7,9 +7,11 @@ import com.example.lms.mapper.StudentMapper;
 import com.example.lms.dao.StudentRepository;
 import com.example.lms.service.StudentService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import java.util.List;
+import org.springframework.data.domain.Pageable;
+
 
 @RequiredArgsConstructor
 @Service
@@ -18,10 +20,11 @@ public class StudentServiceImpl implements StudentService {
     private final StudentMapper studentMapper;
 
     @Override
-    public List<StudentDto> getAllStudents() {
-        return studentRepository.findAll().stream()
-                .map(studentMapper::toDto)
-                .toList();
+    public Page<StudentDto> getAllStudents(Pageable pageable) {
+        return studentRepository.findAll(pageable)
+                .map(studentMapper::toDto);
+
+
     }
 
     @Override
