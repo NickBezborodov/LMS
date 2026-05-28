@@ -14,6 +14,8 @@ import com.example.lms.model.Schedule;
 import com.example.lms.service.ScheduleService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,10 +32,9 @@ public class ScheduleServiceImpl implements ScheduleService {
     private final CourseRepository courseRepository;
 
     @Override
-    public List<ScheduleDto> getAllSchedules() {
-        return scheduleRepository.findAll().stream()
-                .map(scheduleMapper::toDto)
-                .toList();
+    public Page<ScheduleDto> getAllSchedules(Pageable pageable) {
+        return scheduleRepository.findAll(pageable)
+                .map(scheduleMapper::toDto);
     }
 
     @Override
@@ -46,6 +47,10 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Override
     @Transactional
     public ScheduleDto addSchedule(@Valid ScheduleDto dto) {
+        if(scheduleRepository.existsScheduleByTeacherAndLessonDate(dto.getTeacherId(), dto.getLessonDate())){
+            throw new IllegalArgumentException("Учитель занят в это время.");
+        }
+
         Schedule schedule = scheduleMapper.toEntity(dto);
         schedule = scheduleRepository.save(schedule);
         return scheduleMapper.toDto(schedule);

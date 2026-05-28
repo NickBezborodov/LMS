@@ -8,6 +8,8 @@ import com.example.lms.mapper.GroupMapper;
 import com.example.lms.model.Group;
 import com.example.lms.service.GroupService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,10 +23,10 @@ public class GroupServiceImpl implements GroupService {
     private final GroupMapper groupMapper;
 
     @Override
-    public List<GroupDto> getAllGroups() {
-        return groupRepository.findAll().stream()
-                .map(groupMapper::toDto)
-                .toList();
+    public Page<GroupDto> getAllGroups(Pageable pageable) {
+        return groupRepository.findAll(pageable)
+                .map(groupMapper::toDto);
+
     }
 
     @Override

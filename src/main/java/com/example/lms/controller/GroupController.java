@@ -4,6 +4,10 @@ import com.example.lms.dto.GroupDto;
 import com.example.lms.service.GroupService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -14,8 +18,8 @@ public class GroupController {
     private final GroupService groupService;
 
     @GetMapping
-    public List<GroupDto> getAllGroups(){
-        return groupService.getAllGroups();
+    public Page<GroupDto> getAllGroups(@PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable){
+        return groupService.getAllGroups(pageable);
     }
 
     @GetMapping("/{id}")

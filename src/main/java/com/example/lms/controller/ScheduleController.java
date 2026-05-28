@@ -5,6 +5,10 @@ import com.example.lms.dto.ScheduleDto;
 import com.example.lms.service.ScheduleService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -16,8 +20,8 @@ public class ScheduleController {
     private final ScheduleService scheduleService;
 
     @GetMapping
-    public List<ScheduleDto> getAllSchedules(){
-        return scheduleService.getAllSchedules();
+    public Page<ScheduleDto> getAllSchedules(@PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable){
+        return scheduleService.getAllSchedules(pageable);
     }
 
     @GetMapping("/{id}")

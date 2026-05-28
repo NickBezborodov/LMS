@@ -1,10 +1,12 @@
 package com.example.lms.service;
 
 import com.example.lms.dto.CourseDto;
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 
 public interface CourseService {
-    List<CourseDto> getAllCourses();
+    Page<CourseDto> getAllCourses(Pageable pageable);
 
     CourseDto getCourseById(Long id);
 

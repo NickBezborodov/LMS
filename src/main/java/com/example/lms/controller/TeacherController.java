@@ -5,6 +5,10 @@ import com.example.lms.dto.TeacherDto;
 import com.example.lms.service.TeacherService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -16,8 +20,8 @@ public class TeacherController {
     private final TeacherService teacherService;
 
     @GetMapping
-    public List<TeacherDto> getAllTeachers() {
-        return teacherService.getAllTeachers();
+    public Page<TeacherDto> getAllTeachers(@PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
+        return teacherService.getAllTeachers(pageable);
     }
 
     @GetMapping("/{id}")

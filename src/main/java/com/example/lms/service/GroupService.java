@@ -1,11 +1,11 @@
 package com.example.lms.service;
 
 import com.example.lms.dto.GroupDto;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface GroupService {
-    List<GroupDto> getAllGroups();
+    Page<GroupDto> getAllGroups(Pageable pageable);
 
     GroupDto addGroup(GroupDto dto);
 

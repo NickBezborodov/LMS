@@ -1,45 +1,19 @@
 package com.example.lms.controller;
 
+import com.example.lms.AbstractIT;
 import com.example.lms.dao.TeacherRepository;
 import com.example.lms.dto.TeacherDto;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.DynamicPropertyRegistry;
-import org.springframework.test.context.DynamicPropertySource;
-import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.testcontainers.containers.PostgreSQLContainer;
-import org.testcontainers.junit.jupiter.Container;
-import org.testcontainers.junit.jupiter.Testcontainers;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-@Testcontainers
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class TeacherControllerTest {
-    @Container
-    static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:15")
-            .withDatabaseName("lms-pg")
-            .withUsername("test")
-            .withPassword("test");
-
-    @DynamicPropertySource
-    static void configureProperties(DynamicPropertyRegistry registry) {
-        registry.add("spring.datasource.url", postgres::getJdbcUrl);
-        registry.add("spring.datasource.username", postgres::getUsername);
-        registry.add("spring.datasource.password", postgres::getPassword);
-    }
-
-    @LocalServerPort
-    private int port;
-
-    @Autowired
-    private TestRestTemplate restTemplate;
+public class TeacherControllerTest extends AbstractIT {
 
     @Autowired
     private TeacherRepository teacherRepository;
@@ -95,7 +69,7 @@ public class TeacherControllerTest {
                 .firstName("Петр")
                 .lastName("Петров")
                 .build();
-        ResponseEntity<TeacherDto> response =  restTemplate.postForEntity(
+        ResponseEntity<TeacherDto> response = restTemplate.postForEntity(
                 "http://localhost:" + port + "/api/v1/teachers", dto, TeacherDto.class);
 
         Long id = response.getBody().getId();
@@ -121,7 +95,7 @@ public class TeacherControllerTest {
                 .firstName("Петр")
                 .lastName("Петров")
                 .build();
-        ResponseEntity<TeacherDto> response =  restTemplate.postForEntity(
+        ResponseEntity<TeacherDto> response = restTemplate.postForEntity(
                 "http://localhost:" + port + "/api/v1/teachers", dto, TeacherDto.class);
         Long id = response.getBody().getId();
 

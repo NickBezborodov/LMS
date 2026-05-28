@@ -7,6 +7,8 @@ import com.example.lms.mapper.CourseMapper;
 import com.example.lms.model.Course;
 import com.example.lms.service.CourseService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,10 +21,9 @@ public class CourseServiceImpl implements CourseService {
     private final CourseRepository courseRepository;
 
     @Override
-    public List<CourseDto> getAllCourses() {
-        return courseRepository.findAll().stream()
-                .map(courseMapper::toDto)
-                .toList();
+    public Page<CourseDto> getAllCourses(Pageable pageable) {
+        return courseRepository.findAll(pageable)
+                .map(courseMapper::toDto);
     }
 
     @Override

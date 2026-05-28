@@ -1,15 +1,12 @@
 package com.example.lms.service;
 
-
-import com.example.lms.dto.GroupDto;
 import com.example.lms.dto.ScheduleDto;
 import jakarta.validation.Valid;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface ScheduleService {
-    List<ScheduleDto> getAllSchedules();
+    Page<ScheduleDto> getAllSchedules(Pageable pageable);
 
     ScheduleDto getScheduleById(Long id);
 

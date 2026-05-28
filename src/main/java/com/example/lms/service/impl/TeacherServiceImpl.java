@@ -9,6 +9,8 @@ import com.example.lms.model.Course;
 import com.example.lms.model.Teacher;
 import com.example.lms.service.TeacherService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,10 +23,9 @@ public class TeacherServiceImpl implements TeacherService {
     private final TeacherMapper teacherMapper;
 
     @Override
-    public List<TeacherDto> getAllTeachers() {
-        return teacherRepository.findAll().stream()
-                .map(teacherMapper::toDto)
-                .toList();
+    public Page<TeacherDto> getAllTeachers(Pageable pageable) {
+        return teacherRepository.findAll(pageable)
+                .map(teacherMapper::toDto);
     }
 
     @Override

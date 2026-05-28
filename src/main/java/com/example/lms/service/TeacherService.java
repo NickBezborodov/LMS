@@ -2,12 +2,14 @@ package com.example.lms.service;
 
 
 import com.example.lms.dto.TeacherDto;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
-import java.util.List;
+
 
 public interface TeacherService {
 
-    List<TeacherDto> getAllTeachers();
+    Page<TeacherDto> getAllTeachers(Pageable pageable);
 
     TeacherDto addTeacher(TeacherDto dto);
 
