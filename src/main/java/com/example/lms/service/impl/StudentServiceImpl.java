@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.data.domain.Pageable;
 
-
 @RequiredArgsConstructor
 @Service
 public class StudentServiceImpl implements StudentService {
@@ -47,8 +46,8 @@ public class StudentServiceImpl implements StudentService {
     public StudentDto updateStudent(Long id, StudentDto dto) {
         Student student = studentRepository.findById(id)
                 .orElseThrow(() -> new StudentNotFoundException("Студент с id " + id + " не найден"));
-        student.setFirstName(dto.getFirstName());
-        student.setLastName(dto.getLastName());
+        student.setFirstName(dto.firstName());
+        student.setLastName(dto.lastName());
 
         student = studentRepository.save(student);
         return studentMapper.toDto(student);

@@ -25,5 +25,6 @@ public class Schedule {
     @ManyToOne
     @JoinColumn(name = "course_id")
     private Course course;
-    private LocalDateTime lessonDate;
+    private LocalDateTime lessonStart;
+    private LocalDateTime lessonEnd;
 }

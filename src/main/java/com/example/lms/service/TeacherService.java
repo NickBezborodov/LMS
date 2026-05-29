@@ -1,11 +1,8 @@
 package com.example.lms.service;
 
-
 import com.example.lms.dto.TeacherDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-
-
 
 public interface TeacherService {
 

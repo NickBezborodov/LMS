@@ -12,8 +12,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-
 @RequiredArgsConstructor
 @Service
 public class CourseServiceImpl implements CourseService {
@@ -46,8 +44,8 @@ public class CourseServiceImpl implements CourseService {
     public CourseDto updateCourse(Long id, CourseDto dto) {
         Course course = courseRepository.findById(id)
                 .orElseThrow(() -> new CourseNotFoundException("Курс с id " + id + " не найден"));
-        course.setName(dto.getName());
-        course.setDescription(dto.getDescription());
+        course.setName(dto.name());
+        course.setDescription(dto.description());
 
         course = courseRepository.save(course);
         return courseMapper.toDto(course);

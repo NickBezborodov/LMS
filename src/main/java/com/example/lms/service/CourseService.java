@@ -4,7 +4,6 @@ import com.example.lms.dto.CourseDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-
 public interface CourseService {
     Page<CourseDto> getAllCourses(Pageable pageable);
 

@@ -13,8 +13,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-
 @RequiredArgsConstructor
 @Service
 public class GroupServiceImpl implements GroupService {
@@ -50,7 +48,7 @@ public class GroupServiceImpl implements GroupService {
     public GroupDto updateGroup(Long id, GroupDto dto) {
         Group group = groupRepository.findById(id)
                 .orElseThrow(() -> new GroupNotFoundException("Группа с id " + id + "не найдена"));
-        group.setName(dto.getName());
+        group.setName(dto.name());
 
         group = groupRepository.save(group);
         return groupMapper.toDto(group);

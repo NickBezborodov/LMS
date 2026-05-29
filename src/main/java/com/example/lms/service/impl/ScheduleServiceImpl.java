@@ -19,8 +19,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-
 @RequiredArgsConstructor
 @Service
 public class ScheduleServiceImpl implements ScheduleService {
@@ -47,7 +45,7 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Override
     @Transactional
     public ScheduleDto addSchedule(@Valid ScheduleDto dto) {
-        if(scheduleRepository.existsScheduleByTeacherAndLessonDate(dto.getTeacherId(), dto.getLessonDate())){
+        if (scheduleRepository.existsOverlappingSchedule(dto.teacherId(), dto.lessonStart(), dto.lessonEnd())) {
             throw new IllegalArgumentException("Учитель занят в это время.");
         }
 
@@ -62,13 +60,18 @@ public class ScheduleServiceImpl implements ScheduleService {
         Schedule schedule = scheduleRepository.findById(id)
                 .orElseThrow(() -> new ScheduleNotFoundException("Таблица с id " + id + " не найдена"));
 
-        schedule.setGroup(groupRepository.findById(dto.getGroupId()).orElseThrow(() -> new GroupNotFoundException
-                ("Группа с id " + dto.getGroupId() + " не найдена")));
-        schedule.setTeacher(teacherRepository.findById(dto.getTeacherId()).orElseThrow(() -> new TeacherNotFoundException
-                ("Учитель с id " + dto.getTeacherId() + " не найден")));
-        schedule.setCourse(courseRepository.findById(dto.getCourseId()).orElseThrow(() -> new CourseNotFoundException
-                ("Курс с id " + dto.getCourseId() + " не найден")));
-        schedule.setLessonDate(dto.getLessonDate());
+        if (scheduleRepository.existsOverlappingSchedule(dto.teacherId(), dto.lessonStart(), dto.lessonEnd())) {
+            throw new IllegalArgumentException("Учитель занят в это время.");
+        }
+
+        schedule.setGroup(groupRepository.findById(dto.groupId()).orElseThrow(() -> new GroupNotFoundException
+                ("Группа с id " + dto.groupId() + " не найдена")));
+        schedule.setTeacher(teacherRepository.findById(dto.teacherId()).orElseThrow(() -> new TeacherNotFoundException
+                ("Учитель с id " + dto.teacherId() + " не найден")));
+        schedule.setCourse(courseRepository.findById(dto.courseId()).orElseThrow(() -> new CourseNotFoundException
+                ("Курс с id " + dto.courseId() + " не найден")));
+        schedule.setLessonStart(dto.lessonStart());
+        schedule.setLessonEnd(dto.lessonEnd());
 
         schedule = scheduleRepository.save(schedule);
         return scheduleMapper.toDto(schedule);

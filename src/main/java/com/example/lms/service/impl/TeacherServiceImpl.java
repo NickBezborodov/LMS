@@ -2,10 +2,8 @@ package com.example.lms.service.impl;
 
 import com.example.lms.dao.TeacherRepository;
 import com.example.lms.dto.TeacherDto;
-import com.example.lms.exception.StudentNotFoundException;
 import com.example.lms.exception.TeacherNotFoundException;
 import com.example.lms.mapper.TeacherMapper;
-import com.example.lms.model.Course;
 import com.example.lms.model.Teacher;
 import com.example.lms.service.TeacherService;
 import lombok.RequiredArgsConstructor;
@@ -13,8 +11,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -48,8 +44,8 @@ public class TeacherServiceImpl implements TeacherService {
     public TeacherDto updateTeacher(Long id, TeacherDto dto) {
         Teacher teacher = teacherRepository.findById(id)
                 .orElseThrow(() -> new TeacherNotFoundException("Учитель с id " + id + " не найден"));
-        teacher.setFirstName(dto.getFirstName());
-        teacher.setLastName(dto.getLastName());
+        teacher.setFirstName(dto.firstName());
+        teacher.setLastName(dto.lastName());
 
         teacher = teacherRepository.save(teacher);
         return teacherMapper.toDto(teacher);
