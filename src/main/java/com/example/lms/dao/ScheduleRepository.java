@@ -25,4 +25,7 @@ public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
     @Query("SELECT COUNT(s) > 0 FROM Schedule s WHERE s.group.id = :groupId AND s.course.id = :courseId")
     boolean existsByGroupIdAndCourseId(@Param("groupId") Long groupId,
                                        @Param("courseId") Long courseId);
+
+    @Query("SELECT s FROM Schedule s WHERE s.lessonStart < :oneYearAgo")
+    List<Schedule> findOlderThanOneYear(@Param("oneYearAgo") LocalDateTime oneYearAgo);
 }

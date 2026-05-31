@@ -27,4 +27,5 @@ public class Schedule {
     private Course course;
     private LocalDateTime lessonStart;
     private LocalDateTime lessonEnd;
+
 }
