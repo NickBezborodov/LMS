@@ -15,12 +15,11 @@ import java.util.List;
 public class ScheduleCleanUpService {
     private final ScheduleRepository scheduleRepository;
 
-    @Scheduled(cron = " 0 0 3 * * ?")
+    @Scheduled(cron = "${schedule.cleanup.cron}")
     @Transactional
     public void deleteOnSchedule(){
         LocalDateTime oneYearAgo = LocalDateTime.now().minusYears(1);
         List<Schedule> oldSchedules = scheduleRepository.findOlderThanOneYear(oneYearAgo);
         scheduleRepository.deleteAll(oldSchedules);
-        System.out.println("Удалено " + oldSchedules.size() +" старых расписаний");
     }
 }
